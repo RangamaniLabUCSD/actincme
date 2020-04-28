@@ -1,8 +1,8 @@
 # ActinCME
 
-[![Build Status](https://github.com/RangamaniLabUCSD/actincme/workflows/Build%20Master/badge.svg)](https://github.com/RangamaniLabUCSD/actincme/actions)
-[![Documentation](https://github.com/RangamaniLabUCSD/actincme/workflows/Documentation/badge.svg)](https://RangamaniLabUCSD.github.io/actincme)
-[![Code Coverage](https://codecov.io/gh/RangamaniLabUCSD/actincme/branch/master/graph/badge.svg)](https://codecov.io/gh/RangamaniLabUCSD/actincme)
+[![Build Status](https://travis-ci.com/RangamaniLabUCSD/actincme.svg?token=x2xd1Q3TcJMz3EjKTTvQ&branch=master)](https://travis-ci.com/RangamaniLabUCSD/actincme)
+[![Documentation](https://readthedocs.org/projects/actincme/badge/?version=latest)](https://actincme.readthedocs.io/en/latest/?badge=latest)
+[![codecov](https://codecov.io/gh/RangamaniLabUCSD/actincme/branch/master/graph/badge.svg?token=25IAS3GFA6)](https://codecov.io/gh/RangamaniLabUCSD/actincme)
 
 actin filament orientations
 
@@ -21,9 +21,10 @@ a.get_value()  # 10
 ```
 
 ## Installation
-`git clone https://github.com/RangamaniLabUCSD/actincme.git'
 
-`pip install -e .[all]'
+ `git clone https://github.com/RangamaniLabUCSD/actincme.git`
+
+ `pip install -e .[all]`
 
 ## Documentation
 For full package documentation please visit [RangamaniLabUCSD.github.io/actincme](https://RangamaniLabUCSD.github.io/actincme).
