@@ -21,8 +21,9 @@ a.get_value()  # 10
 ```
 
 ## Installation
-**Stable Release:** `pip install actincme`<br>
-**Development Head:** `pip install git+https://github.com/RangamaniLabUCSD/actincme.git`
+`git clone https://github.com/RangamaniLabUCSD/actincme.git'
+
+`pip install -e .[all]'
 
 ## Documentation
 For full package documentation please visit [RangamaniLabUCSD.github.io/actincme](https://RangamaniLabUCSD.github.io/actincme).

@@ -44,7 +44,8 @@ interactive_requirements = [
     "matplotlib",
 ]
 
-requirements = []
+with open('requirements.txt', 'r') as f:
+    requirements = f.read().splitlines()
 
 extra_requirements = {
     "test": test_requirements,
