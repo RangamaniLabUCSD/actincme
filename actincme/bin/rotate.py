@@ -54,8 +54,27 @@ class Rotate:
             plt.show()
             
 #         matt trying to return XYZ info
-        self.x3d = x
-        self.y3d = y
-        self.z3d = zs.T
+        self.x3d_norm = x
+        self.y3d_norm = y
+        self.z3d_norm = zs.T
+        
+    def remap_xyz(self, x0, y0, z0):
+        
+        """ Convert normalized XYZ coordinates to original coordinate axes
+        
+        Parameters
+        ----------
+        x0, y0, z0
+        the mean X Y and Z values of a contour.
+        
+        Returns
+        -------
+        np.ndarray, np.ndarray np.ndarray
+            The x y and coordinate arrays of the (fully) symmetricized data
+            back in original coordinate axes.
+        """
 
+        self.x3d = x0-self.x3d_norm
+        self.y3d = y0-self.y3d_norm
+        self.z3d = z0-self.z3d_norm
         
