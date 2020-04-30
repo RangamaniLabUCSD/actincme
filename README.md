@@ -1,6 +1,6 @@
 # ActinCME
 
-[![Build Status](https://travis-ci.com/RangamaniLabUCSD/actincme.svg?token=x2xd1Q3TcJMz3EjKTTvQ&branch=master)](https://travis-ci.com/RangamaniLabUCSD/actincme)
+[![Build Status](https://travis-ci.com/RangamaniLabUCSD/actincme.svg?token=pw2pG4HstcyrC58RiE99&branch=master)](https://travis-ci.com/RangamaniLabUCSD/actincme)
 [![Documentation](https://readthedocs.org/projects/actincme/badge/?version=latest)](https://actincme.readthedocs.io/en/latest/?badge=latest)
 [![codecov](https://codecov.io/gh/RangamaniLabUCSD/actincme/branch/master/graph/badge.svg?token=25IAS3GFA6)](https://codecov.io/gh/RangamaniLabUCSD/actincme)
 
