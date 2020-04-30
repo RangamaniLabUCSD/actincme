@@ -52,5 +52,10 @@ class Rotate:
             plt.close()
         else:
             plt.show()
+            
+#         matt trying to return XYZ info
+        self.x3d = x
+        self.y3d = y
+        self.z3d = zs.T
 
-
+        
