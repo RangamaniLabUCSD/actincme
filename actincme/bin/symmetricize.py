@@ -373,7 +373,7 @@ class Symmetricize:
         
     def get_mean_coords(self):
         """ Return mean XYZ values for transforming back to original coordinates
-        
+        Note - z is never normalized
 
         Returns
         -------
@@ -382,6 +382,5 @@ class Symmetricize:
         """
         mean_x = np.mean(self.x_orig)
         mean_y = np.mean(self.y_orig)
-        mean_z = np.mean(self.z_slice)
         
-        return mean_x, mean_y, mean_z
+        return mean_x, mean_y

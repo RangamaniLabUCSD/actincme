@@ -6,7 +6,7 @@ from mpl_toolkits.mplot3d import Axes3D
 class Rotate:
     """Rotate an axisymmetric curve to 3D and plot it
     """
-    def __init__(self, x, y, z):
+    def __init__(self, x, y, z, mean_x, mean_y):
         """
         contour is current contour
         slice_range = 1:end
@@ -14,6 +14,11 @@ class Rotate:
         self.x = x[len(x)//2:]
         self.y = y[len(y)//2:]
         self.z = z
+        self.mean_x = mean_x
+        self.mean_y = mean_y 
+        self._x3d_norm = []
+        self._y3d_norm = []
+        self._z3d_norm = []
 
     def rotate_single_curve(self, save=False):
 
@@ -32,15 +37,18 @@ class Rotate:
         fig.tight_layout(pad = 0.0)
         #transpose zs or you get a helix not a revolve.
         # you could add rstride = int or cstride = int kwargs to control the mesh density
-        ax.plot_surface(x, y, zs.T, shade = True)
+        # if normalized is True:
+        #     ax.plot_surface(x, zs.T, y,  shade = True)
+        #     # ax.elev = 30 #30 degrees for a typical isometric view
+        #     # ax.azim = 30
+        #     ax.set_zlim([-200, 150])
+        #     ax.set_ylim([-200, 200])
+        #     ax.set_xlim([-250, 250])
+        #     ax.set_aspect('equal')
+        # else:
+        ax.plot_surface(x + self.mean_x, zs.T + self.mean_y, y + np.mean(self.z), shade=True)
 
-        #view orientation
-        ax.elev = 30 #30 degrees for a typical isometric view
-        ax.azim = 30
-        ax.set_zlim([-200, 150])
-        ax.set_ylim([-200, 200])
-        ax.set_xlim([-250, 250])
-        ax.set_aspect('equal')
+
         #turn off the axes to closely mimic picture in original question
         # ax.set_axis_off()
 
@@ -54,27 +62,27 @@ class Rotate:
             plt.show()
             
 #         matt trying to return XYZ info
-        self.x3d_norm = x
-        self.y3d_norm = y
-        self.z3d_norm = zs.T
+        self._x3d_norm = x + np.mean(self.x)
+        self._y3d_norm = zs.T + np.mean(self.y)
+        self._z3d_norm = y + np.mean(self.z)
         
-    def remap_xyz(self, x0, y0, z0):
+    # def remap_xyz(self, x0, y0, z0):
         
-        """ Convert normalized XYZ coordinates to original coordinate axes
+    #     """ Convert normalized XYZ coordinates to original coordinate axes
         
-        Parameters
-        ----------
-        x0, y0, z0
-        the mean X Y and Z values of a contour.
+    #     Parameters
+    #     ----------
+    #     x0, y0, z0
+    #     the mean X Y and Z values of a contour.
         
-        Returns
-        -------
-        np.ndarray, np.ndarray np.ndarray
-            The x y and coordinate arrays of the (fully) symmetricized data
-            back in original coordinate axes.
-        """
+    #     Returns
+    #     -------
+    #     np.ndarray, np.ndarray np.ndarray
+    #         The x y and coordinate arrays of the (fully) symmetricized data
+    #         back in original coordinate axes.
+    #     """
 
-        self.x3d = x0-self.x3d_norm
-        self.y3d = y0-self.y3d_norm
-        self.z3d = z0-self.z3d_norm
+    #     self.x3d = x0-self.x3d_norm
+    #     self.y3d = y0-self.y3d_norm
+    #     self.z3d = z0-self.z3d_norm
         
