@@ -1,7 +1,5 @@
 import numpy as np
 import matplotlib.pyplot as plt
-import imageio
-import skimage.filters
 import scipy.io as sio
 import math
 import pickle as pkl

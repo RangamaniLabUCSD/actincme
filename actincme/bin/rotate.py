@@ -1,7 +1,14 @@
 import matplotlib.pyplot as plt
+import logging
 import numpy as np
 from actincme.bin.symmetricize import Symmetricize
 from mpl_toolkits.mplot3d import Axes3D
+
+###############################################################################
+
+log = logging.getLogger(__name__)
+
+###############################################################################
 
 class Rotate:
     """Rotate an axisymmetric curve to 3D and plot it
@@ -10,17 +17,20 @@ class Rotate:
         """
         contour is current contour
         slice_range = 1:end
+        here x and y are normalized, z is not
+        we need mean_x and mean_y information from original data before it was symmetricized
         """
         self.x = x[len(x)//2:]
         self.y = y[len(y)//2:]
         self.z = z
         self.mean_x = mean_x
         self.mean_y = mean_y 
-        self._x3d_norm = []
-        self._y3d_norm = []
-        self._z3d_norm = []
+        xs, ys, zs = self.rotate_steps()
+        self._x3d_norm = xs + self.mean_x
+        self._y3d_norm = zs.T + self.mean_y
+        self._z3d_norm = ys + np.mean(self.z)
 
-    def rotate_single_curve(self, save=False):
+    def rotate_steps(self):
 
         revolve_steps = np.linspace(0, np.pi*2, len(self.x)).reshape(1,len(self.x))
         theta = revolve_steps
@@ -29,28 +39,18 @@ class Rotate:
         x = rho_column.dot(np.cos(theta))
         y = rho_column.dot(np.sin(theta))
         # # expand z into a 2d array that matches dimensions of x and y arrays..
-        # i used np.meshgrid
         zs, rs = np.meshgrid(self.y, self.x)
+        self._zs = zs
+        return x, y, zs
 
-        #plotting
-        fig, ax = plt.subplots(figsize=[16,8], subplot_kw=dict(projection='3d'))
-        fig.tight_layout(pad = 0.0)
-        #transpose zs or you get a helix not a revolve.
-        # you could add rstride = int or cstride = int kwargs to control the mesh density
-        # if normalized is True:
-        #     ax.plot_surface(x, zs.T, y,  shade = True)
-        #     # ax.elev = 30 #30 degrees for a typical isometric view
-        #     # ax.azim = 30
-        #     ax.set_zlim([-200, 150])
-        #     ax.set_ylim([-200, 200])
-        #     ax.set_xlim([-250, 250])
-        #     ax.set_aspect('equal')
-        # else:
-        ax.plot_surface(x + self.mean_x, zs.T + self.mean_y, y + np.mean(self.z), shade=True)
+    def rotate_single_curve(self, ax, xlims=False, save=False):
 
-
-        #turn off the axes to closely mimic picture in original question
-        # ax.set_axis_off()
+        x, y, zs = self.rotate_steps()
+        if xlims is True:
+            ax.set_zlim([0, 400])
+            ax.set_ylim([400, 800])
+            ax.set_xlim([900, 1300])
+        ax.plot_surface(x + self.mean_x, self._zs.T + self.mean_y, y + np.mean(self.z), shade=True)
 
         if save is True:
             fname = '_tmp%05d.png' % int(self.z[0])
@@ -58,31 +58,72 @@ class Rotate:
             plt.clf()
             plt.cla()
             plt.close()
-        else:
-            plt.show()
-            
-#         matt trying to return XYZ info
-        self._x3d_norm = x + np.mean(self.x)
-        self._y3d_norm = zs.T + np.mean(self.y)
-        self._z3d_norm = y + np.mean(self.z)
-        
-    # def remap_xyz(self, x0, y0, z0):
-        
-    #     """ Convert normalized XYZ coordinates to original coordinate axes
-        
-    #     Parameters
-    #     ----------
-    #     x0, y0, z0
-    #     the mean X Y and Z values of a contour.
-        
-    #     Returns
-    #     -------
-    #     np.ndarray, np.ndarray np.ndarray
-    #         The x y and coordinate arrays of the (fully) symmetricized data
-    #         back in original coordinate axes.
-    #     """
 
-    #     self.x3d = x0-self.x3d_norm
-    #     self.y3d = y0-self.y3d_norm
-    #     self.z3d = z0-self.z3d_norm
+class AverageRotate():
+    
+    def __init__(self, path, start_list, end_list):
+        """
+        Average tomogram slices located in path, return a single rotate object
+        start_list and end_list are manually determined selections
+        """
+
+        self.path = path
+        self.start_list = start_list
+        self.end_list = end_list
+
+    def rotate_many_curves(self, cutoff_value=33, not_includes = [13, 17, 18, 20, 22, 24, 26]):
+        """
+        Handles logic for averaging all curves
+        """
+
+        for j, i in enumerate(range(len(self.start_list))):
+            # manually determined
+            if i not in not_includes:
+                shape = Symmetricize(self.path, i+1, self.start_list[i], self.end_list[i])
+                this_x, this_y, this_z = shape.do_everything_2d("fit", plot=False)
+                mean_x, mean_y = shape.get_mean_coords()
+                # No longer normalized
+                this_x = this_x + mean_x
+                this_y = this_y + mean_y
+                if j == 0:
+                    # chose arbitrary length of 40, must be large enough
+                    max_length = 40
+                    all_x = np.empty((0,max_length), int)
+                    all_y = np.empty((0,max_length), int)
+                    all_z = np.empty((0,max_length), int)
+                # I chose 28 as a cutoff length because i only want to include files that have atleast 29 points
+                if len(this_x) > cutoff_value:
+                    this_x = np.pad(this_x, (max_length - len(this_x), 0), 'constant')
+                    this_y = np.pad(this_y, (max_length - len(this_y), 0), 'constant')
+                    this_z = np.pad(this_z, (max_length - len(this_z), 0), 'constant')
+                    all_x = np.append(all_x, [this_x], axis=0)
+                    all_y = np.append(all_y, [this_y], axis=0)
+                    all_z = np.append(all_z, [this_z], axis=0)
         
+        # Average across all shapes
+        avg_x = np.mean(all_x, axis=0)
+        avg_y = np.mean(all_y, axis=0)
+        avg_z = np.mean(all_z, axis=0)
+
+        # Remove 0s from padding
+        avg_x = avg_x[avg_x != 0]
+        avg_y = avg_y[avg_y != 0]
+        avg_z = avg_z[avg_z != 0]
+
+        # Find average x and y to normalize data
+        mean_of_avg_x = np.mean(avg_x)
+        mean_of_avg_y = np.mean(avg_y)
+
+        # Create rotate object
+        this_rotate = Rotate(avg_x - mean_of_avg_x, avg_y - mean_of_avg_y, avg_z, mean_of_avg_x , mean_of_avg_y)
+
+        return this_rotate
+
+    def plot_averaged_curve(self, ax, cutoff_value=35, not_includes = [13, 17, 18, 20, 22, 24, 26], xlims=False, save=False):
+
+        # Do the averaging, return rotate object
+        this_rotate = self.rotate_many_curves(cutoff_value, not_includes)
+
+        # Plot it
+        this_rotate.rotate_single_curve(ax, xlims, save)
+
