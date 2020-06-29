@@ -1,7 +1,5 @@
 import numpy as np
 import matplotlib.pyplot as plt
-import imageio
-import skimage.filters
 import scipy.io as sio
 import math
 import pickle as pkl
@@ -50,6 +48,11 @@ class Symmetricize:
         self.y_fit = cur_contour['Y'].to_numpy(dtype = 'float64')[slice_start:slice_end] #extracts y fit data
         self.z_slice = cur_contour['Z'].to_numpy(dtype = 'float64')[slice_start:slice_end]
 
+        # store original x y z coordinates
+        self.x_orig=cur_contour['X'].to_numpy(dtype = 'float64')[slice_start:slice_end]
+        self.y_orig=cur_contour['Y'].to_numpy(dtype = 'float64')[slice_start:slice_end]
+        self.z_orig=cur_contour['Z'].to_numpy(dtype = 'float64')[slice_start:slice_end]
+        
         # self.x_outerfit = mat_contents['outerfit'][:,0]
         # self.y_outerfit = mat_contents['outerfit'][:,1]
         self.locs = []
@@ -365,3 +368,17 @@ class Symmetricize:
             setattr(self, "x_" + fit_or_outerfit + "_symmetric", new_x2)
             setattr(self, "y_" + fit_or_outerfit + "_symmetric", new_y2)
             return new_x2, new_y2, self.z_slice[:len(new_x2)]
+        
+    def get_mean_coords(self):
+        """ Return mean XYZ values for transforming back to original coordinates
+        Note - z is never normalized
+
+        Returns
+        -------
+        np.ndarray, np.ndarray, np.ndarray
+            The x y and z coordinate arrays of the original contour
+        """
+        mean_x = np.mean(self.x_orig)
+        mean_y = np.mean(self.y_orig)
+        
+        return mean_x, mean_y
