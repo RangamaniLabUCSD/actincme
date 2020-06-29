@@ -1,15 +1,140 @@
+-e git+https://github.com/RangamaniLabUCSD/actincme.git@48b2ad9d2ab9a3c1e99a504e3066014d18fa0038#egg=actincme
+alabaster==0.7.12
+altair==4.1.0
+appdirs==1.4.4
+appnope==0.1.0
+argh==0.26.2
+attrs==19.3.0
+Babel==2.8.0
+backcall @ file:///home/conda/feedstock_root/build_artifacts/backcall_1592338393461/work
+black==19.10b0
+bleach @ file:///home/conda/feedstock_root/build_artifacts/bleach_1588608214987/work
+bump2version==1.0.0
+bumpversion==0.6.0
+certifi==2020.6.20
+chardet==3.0.4
+click==7.1.2
+codecov==2.1.3
+colorcet==2.0.2
+coverage==5.1
 cycler==0.10.0
-kiwisolver==1.0.1
-matplotlib==3.0.2
-numpy==1.16.1
-pandas==0.24.1
-pyparsing==2.3.1
-python-dateutil==2.8.0
-pytz==2018.9
-scipy==1.2.1
-seaborn==0.9.0
-six==1.12.0
-networkx==2.3
+decorator==4.4.2
+defusedxml==0.6.0
+distlib==0.3.0
+docutils==0.16
+entrypoints==0.3
+filelock==3.0.12
+flake8==3.8.2
+idna==2.9
+imageio==2.8.0
+imagesize==1.2.0
+importlib-metadata @ file:///Users/runner/miniforge3/conda-bld/importlib-metadata_1593211384223/work
+ipydatawidgets==4.0.1
+ipykernel @ file:///Users/runner/miniforge3/conda-bld/ipykernel_1590020247107/work/dist/ipykernel-5.3.0-py3-none-any.whl
+ipympl==0.5.6
+ipython @ file:///Users/runner/miniforge3/conda-bld/ipython_1593235463433/work
+ipython-genutils==0.2.0
+ipywidgets==7.5.1
+itk-core==5.1.0.post3
+itk-filtering==5.1.0.post3
+itk-meshtopolydata==0.6.2
+itk-numerics==5.1.0.post3
+itkwidgets==0.30.1
+jedi @ file:///Users/runner/miniforge3/conda-bld/jedi_1592619352011/work
+Jinja2==2.11.2
+json5==0.9.5
+jsonschema==3.2.0
+jupyter-client==6.1.3
+jupyter-core==4.6.3
+jupyterlab==2.1.3
+jupyterlab-server==1.1.5
+keyring==21.2.1
+kiwisolver==1.2.0
+livereload==2.6.1
+m2r==0.2.1
+MarkupSafe==1.1.1
+matplotlib @ file:///Users/runner/miniforge3/conda-bld/matplotlib-base_1592576116805/work
+mccabe==0.6.1
+meshio==4.0.15
+mistune==0.8.4
+more-itertools==8.3.0
+nbconvert==5.6.1
+nbformat==5.0.6
 nbsphinx==0.4.2
-similaritymeasures==0.4.3
+networkx==2.3
+notebook @ file:///Users/runner/miniforge3/conda-bld/notebook_1588887229329/work
+numpy @ file:///Users/runner/miniforge3/conda-bld/numpy_1591485226984/work
+packaging @ file:///home/conda/feedstock_root/build_artifacts/packaging_1589925210001/work
+pandas==0.24.1
+pandocfilters==1.4.2
+param==1.9.3
+parso==0.7.0
+pathspec==0.8.0
+pathtools==0.1.2
+pexpect==4.8.0
+pickleshare==0.7.5
+Pillow==7.1.2
+pkginfo==1.5.0.1
+pluggy==0.13.1
+port-for==0.3.1
+prometheus-client @ file:///home/conda/feedstock_root/build_artifacts/prometheus_client_1590412252446/work
+prompt-toolkit @ file:///home/conda/feedstock_root/build_artifacts/prompt-toolkit_1592500439797/work
+ptyprocess==0.6.0
+py==1.8.1
+pycodestyle==2.6.0
+pyct==0.4.6
+pyflakes==2.2.0
+Pygments==2.6.1
+pymesh==1.0.2
 pyntcloud==0.1.2
+pyparsing==2.4.7
+pyrsistent==0.16.0
+pytest==5.4.2
+pytest-cov==2.9.0
+pytest-raises==0.11
+pytest-runner==5.2
+python-dateutil==2.8.1
+pytz==2018.9
+pyvista==0.25.3
+PyYAML==5.1.2
+pyzmq==19.0.1
+readme-renderer==26.0
+regex==2020.5.14
+requests==2.23.0
+requests-toolbelt==0.9.1
+scipy==1.2.1
+scooby==0.5.5
+seaborn==0.9.0
+Send2Trash==1.5.0
+similaritymeasures==0.4.3
+six @ file:///home/conda/feedstock_root/build_artifacts/six_1590081179328/work
+snowballstemmer==2.0.0
+Sphinx==2.4.4
+sphinx-autobuild==0.7.1
+sphinx-rtd-theme==0.4.3
+sphinxcontrib-applehelp==1.0.2
+sphinxcontrib-devhelp==1.0.2
+sphinxcontrib-htmlhelp==1.0.3
+sphinxcontrib-jsmath==1.0.1
+sphinxcontrib-qthelp==1.0.3
+sphinxcontrib-serializinghtml==1.1.4
+terminado==0.8.3
+testpath==0.4.4
+toml==0.10.1
+toolz==0.10.0
+tornado==6.0.4
+tox==3.15.1
+tqdm==4.46.0
+traitlets==4.3.3
+traittypes==0.2.1
+twine==3.1.1
+typed-ast==1.4.1
+urllib3==1.25.9
+virtualenv==20.0.21
+vtk==9.0.1
+watchdog==0.9.0
+wcwidth @ file:///home/conda/feedstock_root/build_artifacts/wcwidth_1592931742287/work
+webencodings==0.5.1
+widgetsnbextension==3.5.1
+zipp==3.1.0
+zstandard==0.14.0

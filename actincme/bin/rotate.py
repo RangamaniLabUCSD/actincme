@@ -71,9 +71,11 @@ class AverageRotate():
         self.start_list = start_list
         self.end_list = end_list
 
-    def rotate_many_curves(self, cutoff_value=33, not_includes = [13, 17, 18, 20, 22, 24, 26]):
+    def rotate_many_curves(self, cutoff_value=1, not_includes = [13, 17, 18, 20, 22, 24, 26]):
         """
         Handles logic for averaging all curves
+        cutoff value included in case we want to average curves that have a specific number of elements in them
+        default is 1 (so we average all curves)
         """
 
         for j, i in enumerate(range(len(self.start_list))):
@@ -92,23 +94,27 @@ class AverageRotate():
                     all_y = np.empty((0,max_length), int)
                     all_z = np.empty((0,max_length), int)
                 # I chose 28 as a cutoff length because i only want to include files that have atleast 29 points
+
                 if len(this_x) > cutoff_value:
-                    this_x = np.pad(this_x, (max_length - len(this_x), 0), 'constant')
-                    this_y = np.pad(this_y, (max_length - len(this_y), 0), 'constant')
-                    this_z = np.pad(this_z, (max_length - len(this_z), 0), 'constant')
+                    this_x = np.pad(this_x, (max_length - len(this_x), 0), 'constant', constant_values=(np.NaN, np.NaN))
+                    this_y = np.pad(this_y, (max_length - len(this_y), 0), 'constant',constant_values=(np.NaN, np.NaN))
+                    this_z = np.pad(this_z, (max_length - len(this_z), 0), 'constant', constant_values=(np.NaN, np.NaN))
+                    # this_x = np.pad(this_x, (max_length - len(this_x), 0), 'constant')
+                    # this_y = np.pad(this_y, (max_length - len(this_y), 0), 'constant')
+                    # this_z = np.pad(this_z, (max_length - len(this_z), 0), 'constant')
                     all_x = np.append(all_x, [this_x], axis=0)
                     all_y = np.append(all_y, [this_y], axis=0)
                     all_z = np.append(all_z, [this_z], axis=0)
         
-        # Average across all shapes
-        avg_x = np.mean(all_x, axis=0)
-        avg_y = np.mean(all_y, axis=0)
-        avg_z = np.mean(all_z, axis=0)
+        # Average across all shapes (if NaN and element, choose element)
+        avg_x = np.nanmean(all_x, axis=0)
+        avg_y = np.nanmean(all_y, axis=0)
+        avg_z = np.nanmean(all_z, axis=0)
 
-        # Remove 0s from padding
-        avg_x = avg_x[avg_x != 0]
-        avg_y = avg_y[avg_y != 0]
-        avg_z = avg_z[avg_z != 0]
+        # Remove NaNs from padding
+        avg_x = avg_x[~np.isnan(avg_x)]
+        avg_y = avg_y[~np.isnan(avg_y)]
+        avg_z = avg_z[~np.isnan(avg_z)]
 
         # Find average x and y to normalize data
         mean_of_avg_x = np.mean(avg_x)
