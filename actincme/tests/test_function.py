@@ -54,8 +54,9 @@ def test_filament_directions():
     test_x, test_y, test_z = this_rotate.rotate_steps()
     filaments = Filament('./', 'BranchedActinCoordinates_Integers')
     filaments.calculate_directionality(rotated_surface=this_rotate) #handles all the logic 
-    assert np.array([-91 < e < 91 for e in filaments._filament_orientation_dataframe['zdir_rel'].values]).all()
-    assert np.array([-91 < e < 91 for e in filaments._filament_orientation_dataframe['ydir_rel'].values]).all()
+    this_metric = filaments._filament_orientation_dataframe['zdir'].values
+    assert np.array([-300 < e < 300 for e in this_metric[~np.isnan(this_metric)]]).all()
+    # assert np.array([-300 < e < 300 for e in filaments._filament_orientation_dataframe['ydir'].values]).all()
 
 
 # # Generally, you should parametrize your tests, but you should include exception tests like below!
