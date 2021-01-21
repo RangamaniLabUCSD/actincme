@@ -6,6 +6,7 @@ import pickle as pkl
 import pandas as pd
 from mpl_toolkits.mplot3d import Axes3D
 import similaritymeasures
+import os 
 
 class Symmetricize:
     """Performs necessary calculations to symmetricize irregularly shaped cell buds
@@ -39,8 +40,32 @@ class Symmetricize:
         slice_range = 1:end
         """
         self.path = path
-        with open(self.path + 'CCP_membrane_coordinates.pkl', 'rb') as f:
-            data = pkl.load(f)
+        
+        #         check if there is a file called "CCP_membrane_coordinates.pkl"
+        
+        if os.path.isfile(self.path + 'CCP_membrane_coordinates.pkl'):
+
+            with open(self.path + 'CCP_membrane_coordinates.pkl', 'rb') as f:
+                data = pkl.load(f)
+        else:
+        # Check for files in the folder that contain the word membrane
+            membrane_file = []
+            files_in_dir = os.listdir(self.path)
+            for file in files_in_dir:
+                if 'Membrane' in file or 'membrane' in file:
+                    membrane_file = file
+            
+        # Open the membrane textfile and convert to the same format as data, as in plot_filament_orientations.ipynb
+            coordinatesfile = open(self.path + membrane_file, 'r')
+
+            coords_df = pd.read_table(coordinatesfile, delim_whitespace=True)
+            coords_df.columns=['object', 'contour', 'X', 'Y', 'Z']
+            coords_df=coords_df.set_index(['object', 'contour'])
+
+            # #     make multiindex
+            coordinatesfile.close()
+            data = coords_df
+
         data = data.reset_index()
         cur_contour = data[data['contour']==contour]
 

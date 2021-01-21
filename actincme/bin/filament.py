@@ -197,8 +197,8 @@ class Filament(object):
                     ax.plot(xs=cur_filament['x_coords'].values[0], ys=cur_filament['y_coords'].values[0], zs=cur_filament['z_coords'].values[0],  color=colorVal[0], linewidth=3)
             except:
                 print("Error in plotting")
-        cbar = fig.colorbar(cmx.ScalarMappable(norm=cNorm, cmap=new_cmap), ax=ax)
-        cbar.set_label(dir, rotation=270)
+#         cbar = fig.colorbar(cmx.ScalarMappable(norm=cNorm, cmap=new_cmap), ax=ax)
+#         cbar.set_label(dir, rotation=270)
 
     def truncate_colormap(self, cmap, minval=0.0, maxval=1.0, n=100):
         """
