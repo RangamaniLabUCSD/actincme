@@ -54,7 +54,8 @@ class Symmetricize:
             for file in files_in_dir:
                 if 'Membrane' in file or 'membrane' in file:
                     membrane_file = file
-            
+#             print(self.path)
+#             print(membrane_file)
         # Open the membrane textfile and convert to the same format as data, as in plot_filament_orientations.ipynb
             coordinatesfile = open(self.path + membrane_file, 'r')
 
