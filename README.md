@@ -27,7 +27,7 @@ a.get_value()  # 10
  `pip install -e .[all]`
 
 ## Documentation
-For full package documentation please visit [RangamaniLabUCSD.github.io/actincme](https://RangamaniLabUCSD.github.io/actincme).
+For full package documentation please visit [RangamaniLabUCSD.github.io/actincme](https://RangamaniLabUCSD.github.io/actincme). This code was used in the following project: https://www.biorxiv.org/content/10.1101/2021.06.28.450262v2
 
 ## Development
 See [CONTRIBUTING.md](CONTRIBUTING.md) for information related to developing the code.
